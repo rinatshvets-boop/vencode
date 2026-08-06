@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>VENCODE</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+
+    .btn-regulamin {
+      background: #374151;
+      color: #e5e7eb;
+    }
+
+    .btn-regulamin:hover {
+      background: #4b5563;
+      transform: scale(1.05);
+    }
+
+    .btn-discord {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .btn-discord:hover {
+      background: #7c3aed;
+      transform: scale(1.05);
+    }
+
+    /* prosty modal z regulaminem */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.8);
+      display: none;          /* ukryty domyślnie */
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal {
+      max-width: 600px;
+      background: #111827;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      text-align: left;
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .modal p {
+      margin: 4px 0;
+    }
+
+    .modal-close {
+      margin-top: 16px;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: #374151;
+      color: #e5e7eb;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: #4b5563;
+      transform: scale(1.03);
+    }
+
+    /* wyróżnione słowa w regulaminie */
+    .highlight {
+      font-size: 18px;       /* większy tekst */
+      font-weight: bold;     /* pogrubienie */
+      color: #FF0000;        /* np. fioletowy, możesz zmienić */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Witamy na stronie VENCODE</h1>
+    <p>Tutaj możesz zapoznać się z regulaminem oraz dołączyć na nasz serwer discord.</p>
+
+    <div class="buttons">
+      <!-- przycisk z regulaminem -->
+      <button class="btn btn-regulamin" onclick="openRegulamin()">
+        Regulamin
+      </button>
+
+      <!-- przycisk dołączenia na serwer Discord -->
+      <a class="btn btn-discord"
+         href="https://discord.gg/KuKjzrxjV4"
+         target="_blank"
+         rel="noopener noreferrer">
+        Dołącz na serwer Discord
+      </a>
+    </div>
+  </div>
+
+  <!-- okno z regulaminem -->
+  <div class="modal-overlay" id="regulaminModal">
+    <div class="modal">
+      <h2>Regulamin VENCODE</h2>
+      <p><span class="highlight">§1. Zasady ogólne</span></p>
+      <p>• Szanuj innych graczy – zakaz wyzywania, obrażania i prowokowania.</p>
+      <p>• Zakaz spamu, floodu oraz reklam bez zgody administracji.</p>
+      <p>• Zakaz rasizmu, seksizmu, mowy nienawiści oraz treści +18.</p>
+      <p>• Decyzje administracji są ostateczne.</p>
+      <p>• Nieznajomość regulaminu nie zwalnia z odpowiedzialności.</p>
+      <p>• Zakaz wyłudzania wszelkich rang administracyjnych od administracji.</p>
+      <p><span class="highlight">§2. Zasady zamówień</span></p>
+      <p>• Każdy klient, który zamawia produkt powinien zapoznać się z regulaminem zamówień.</p>
+      <p>• Developer realizujący zamówienie klienta może w każdej chwili odpóścić zamówienie i zwrócić pieniądze.</p>
+      <p>• Jeżeli developer realizujący zamówienie klienta bezczelnie go oszuka, to osoba oszukana może zgłosić developera oraz domagać się zrealizowania jej zamówienia.</p>
+      <p>• Klient może skorzystać z opcji płatności tylko tych, które obowiązują dany produkt.</p>
+      <p>• Klient powinien najpierw zapłacić za produkt przed jego odbiorem.</p>
+      <p><span class="highlight">§3. Discord</span></p>
+      <p>• Zakaz wysyłania treści nieodpowiednich (NSFW, przemoc).</p>
+      <p>• Zakaz podszywania się pod administrację lub developerów naszego serwera.</p>
+      <p>• Zakaz blokowania kanałów pomocy.</p>
+      <p>• Nie spamuj kanałów pomocy.</p>
+      <p>• Nie pisz wielokrotnie tego samego problemu.</p>
+      <p>• Po zgłoszeniu czekaj cierpliwie na administratora, który pomoże.</p>
+
+      <button class="modal-close" onclick="closeRegulamin()">
+        Zamknij
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // otwarcie okna z regulaminem
+    function openRegulamin() {
+      document.getElementById('regulaminModal').style.display = 'flex';
+    }
+
+    // zamknięcie okna z regulaminem
+    function closeRegulamin() {
+      document.getElementById('regulaminModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
