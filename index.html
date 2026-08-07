@@ -63,12 +63,12 @@
       transform: scale(1.05);
     }
 
-    /* prosty modal z regulaminem */
+   
     .modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(15, 23, 42, 0.8);
-      display: none;          /* ukryty domyślnie */
+      display: none;          
       justify-content: center;
       align-items: center;
       padding: 16px;
@@ -110,11 +110,11 @@
       transform: scale(1.03);
     }
 
-    /* wyróżnione słowa w regulaminie */
+    
     .highlight {
-      font-size: 18px;       /* większy tekst */
-      font-weight: bold;     /* pogrubienie */
-      color: #FF0000;        /* np. fioletowy, możesz zmienić */
+      font-size: 18px;     
+      font-weight: bold;   
+      color: #FF0000;      
     }
   </style>
 </head>
@@ -124,12 +124,12 @@
     <p>Tutaj możesz zapoznać się z regulaminem oraz dołączyć na nasz serwer discord.</p>
 
     <div class="buttons">
-      <!-- przycisk z regulaminem -->
+    
       <button class="btn btn-regulamin" onclick="openRegulamin()">
         Regulamin
       </button>
 
-      <!-- przycisk dołączenia na serwer Discord -->
+  
       <a class="btn btn-discord"
          href="https://discord.gg/bV64DJmnMG"
          target="_blank"
@@ -139,7 +139,7 @@
     </div>
   </div>
 
-  <!-- okno z regulaminem -->
+
   <div class="modal-overlay" id="regulaminModal">
     <div class="modal">
       <h2>Regulamin VENCODE</h2>
@@ -171,12 +171,12 @@
   </div>
 
   <script>
-    // otwarcie okna z regulaminem
+   
     function openRegulamin() {
       document.getElementById('regulaminModal').style.display = 'flex';
     }
 
-    // zamknięcie okna z regulaminem
+
     function closeRegulamin() {
       document.getElementById('regulaminModal').style.display = 'none';
     }
