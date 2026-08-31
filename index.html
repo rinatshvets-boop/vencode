@@ -82,6 +82,7 @@
         }
 
         .logo {
+            
             display: flex;
             align-items: center;
             gap: 10px;
@@ -93,13 +94,28 @@
         .logo-mark {
             width: 34px;
             height: 34px;
-            display: grid;
-            place-items: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            padding: 0;
+            box-sizing: border-box;
             border-radius: 10px;
-            color: white;
+
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -1px;
+            font-family: monospace;
+
             background: linear-gradient(135deg, var(--red), #7e0000);
             box-shadow: 0 0 22px var(--red-glow);
+
+            transform: translateY(-1px);
         }
+
 
         .logo span {
             color: var(--red);
