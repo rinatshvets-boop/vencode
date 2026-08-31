@@ -1,185 +1,1124 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>VENCODE</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="VENCODE — pluginy Minecraft, skrypty minecraft, boty Discord oraz strony internetowe."
+    >
+    <title>VENCODE — Pluginy, skrypty i boty Discord</title>
 
-    .container {
-      text-align: center;
-    }
+    <style>
+        :root {
+            --background: #09090b;
+            --background-secondary: #121217;
+            --card: #17171d;
+            --card-hover: #1d1d25;
+            --border: rgba(255, 255, 255, 0.09);
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --red: #e00000;
+            --red-dark: #a90000;
+            --red-glow: rgba(224, 0, 0, 0.24);
+            --white: #ffffff;
+        }
 
-    h1 {
-      margin-bottom: 24px;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    .buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    .btn {
-      display: inline-block;
-      padding: 16px 32px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: 0.2s ease;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(224, 0, 0, 0.14), transparent 28%),
+                radial-gradient(circle at left center, rgba(224, 0, 0, 0.07), transparent 25%),
+                var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
 
-    .btn-regulamin {
-      background: #374151;
-      color: #e5e7eb;
-    }
+        body.modal-open {
+            overflow: hidden;
+        }
 
-    .btn-regulamin:hover {
-      background: #4b5563;
-      transform: scale(1.05);
-    }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-    .btn-discord {
-      background: #ff0000;
-      color: white;
-    }
+        button {
+            font: inherit;
+        }
 
-    .btn-discord:hover {
-      background: #cc0000;
-      transform: scale(1.05);
-    }
 
-   
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.8);
-      display: none;          
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-    }
 
-    .modal {
-      max-width: 600px;
-      background: #111827;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-      text-align: left;
-    }
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            width: 100%;
+            border-bottom: 1px solid var(--border);
+            background: rgba(9, 9, 11, 0.88);
+            backdrop-filter: blur(14px);
+        }
 
-    .modal h2 {
-      margin-top: 0;
-      margin-bottom: 8px;
-    }
+        .nav-content {
+            width: min(1160px, calc(100% - 40px));
+            min-height: 74px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+        }
 
-    .modal p {
-      margin: 4px 0;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
 
-    .modal-close {
-      margin-top: 16px;
-      display: inline-block;
-      padding: 10px 20px;
-      border-radius: 10px;
-      background: #374151;
-      color: #e5e7eb;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s ease;
-    }
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            color: white;
+            background: linear-gradient(135deg, var(--red), #7e0000);
+            box-shadow: 0 0 22px var(--red-glow);
+        }
 
-    .modal-close:hover {
-      background: #4b5563;
-      transform: scale(1.03);
-    }
+        .logo span {
+            color: var(--red);
+        }
 
-    
-    .highlight {
-      font-size: 18px;     
-      font-weight: bold;   
-      color: #FF0000;      
-    }
-  </style>
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            min-height: 47px;
+            padding: 13px 20px;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 800;
+            transition: transform 0.2s ease, background 0.2s ease, border 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button-primary {
+            color: white;
+            background: var(--red);
+            box-shadow: 0 10px 24px var(--red-glow);
+        }
+
+        .button-primary:hover {
+            background: var(--red-dark);
+        }
+
+        .button-secondary {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--border);
+        }
+
+        .button-secondary:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.17);
+        }
+
+        .button-discord {
+            color: white;
+            background: #5865f2;
+            box-shadow: 0 10px 24px rgba(88, 101, 242, 0.2);
+        }
+
+        .button-discord:hover {
+            background: #4350d8;
+        }
+
+
+
+        .hero {
+            width: min(1160px, calc(100% - 40px));
+            min-height: 610px;
+            margin: 0 auto;
+            padding: 105px 0 75px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            border: 1px solid rgba(224, 0, 0, 0.35);
+            border-radius: 999px;
+            color: #ff7777;
+            background: rgba(224, 0, 0, 0.09);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff2727;
+            box-shadow: 0 0 12px #ff2727;
+        }
+
+        .hero h1 {
+            max-width: 740px;
+            margin: 18px 0;
+            font-size: clamp(38px, 5vw, 66px);
+            line-height: 1.06;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: var(--red);
+        }
+
+        .hero-text {
+            max-width: 630px;
+            margin: 0;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 43px;
+        }
+
+        .stat {
+            padding-left: 14px;
+            border-left: 3px solid var(--red);
+        }
+
+        .stat strong {
+            display: block;
+            color: white;
+            font-size: 19px;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .hero-card {
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background:
+                linear-gradient(145deg, rgba(224, 0, 0, 0.12), transparent 43%),
+                var(--card);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            top: -95px;
+            right: -95px;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            background: rgba(224, 0, 0, 0.15);
+            filter: blur(5px);
+        }
+
+        .window-header {
+            position: relative;
+            display: flex;
+            gap: 7px;
+            margin-bottom: 30px;
+        }
+
+        .window-header span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #4b4b56;
+        }
+
+        .window-header span:first-child {
+            background: #e00000;
+        }
+
+        .service-preview {
+            position: relative;
+            display: grid;
+            gap: 13px;
+        }
+
+        .preview-line {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            min-height: 67px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-icon {
+            width: 39px;
+            height: 39px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(224, 0, 0, 0.14);
+            font-size: 19px;
+        }
+
+        .preview-line strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .preview-line small {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .section {
+            width: min(1160px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 88px 0;
+        }
+
+        .section-heading {
+            max-width: 670px;
+            margin-bottom: 34px;
+        }
+
+        .section-label {
+            margin: 0 0 8px;
+            color: #ff5d5d;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .section h2 {
+            margin: 0;
+            font-size: clamp(29px, 4vw, 42px);
+            letter-spacing: -1px;
+        }
+
+        .section-description {
+            margin: 12px 0 0;
+            color: var(--muted);
+        }
+
+
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .service-card {
+            min-height: 215px;
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--card);
+            transition: transform 0.22s ease, background 0.22s ease, border 0.22s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(224, 0, 0, 0.45);
+            background: var(--card-hover);
+        }
+
+        .service-icon {
+            width: 47px;
+            height: 47px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 17px;
+            border-radius: 12px;
+            background: rgba(224, 0, 0, 0.13);
+            font-size: 23px;
+        }
+
+        .service-card h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .service-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+
+
+        .recruitment-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            padding: 37px;
+            border: 1px solid rgba(224, 0, 0, 0.34);
+            border-radius: 20px;
+            background:
+                linear-gradient(100deg, rgba(224, 0, 0, 0.18), transparent 55%),
+                var(--card);
+        }
+
+        .recruitment-box h2 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .recruitment-box p {
+            max-width: 650px;
+            margin: 0;
+            color: var(--muted);
+        }
+
+
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .team-card {
+            display: grid;
+            grid-template-columns: 82px 1fr;
+            gap: 18px;
+            padding: 21px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--card);
+            transition: border 0.2s ease, transform 0.2s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(224, 0, 0, 0.4);
+        }
+
+        .profile-avatar {
+            width: 82px;
+            height: 82px;
+            display: grid;
+            place-items: center;
+            border: 2px solid rgba(224, 0, 0, 0.55);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #500000, #17171d);
+            color: white;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .team-info {
+            min-width: 0;
+        }
+
+        .role {
+            display: inline-block;
+            margin-bottom: 4px;
+            color: #ff6767;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+        }
+
+        .team-info h3 {
+            margin: 0;
+            font-size: 19px;
+        }
+
+        .team-info p {
+            margin: 7px 0 13px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .profile-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        .profile-link:hover {
+            color: #ff6c6c;
+        }
+
+
+        footer {
+            margin-top: 20px;
+            padding: 30px 20px;
+            border-top: 1px solid var(--border);
+            color: #777783;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: var(--text);
+        }
+
+
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            position: relative;
+            width: min(760px, 100%);
+            max-height: min(820px, 92vh);
+            overflow-y: auto;
+            padding: 29px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #15151b;
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal h2 {
+            margin: 0 0 18px;
+            font-size: 25px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: var(--text);
+            background: #24242d;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--red-dark);
+        }
+
+        .rule-title {
+            margin: 22px 0 8px;
+            color: #ff5a5a;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .rules-list {
+            display: grid;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            color: #d3d3da;
+            font-size: 14px;
+        }
+
+        .rules-list li {
+            padding: 11px 13px;
+            border-left: 3px solid var(--red);
+            border-radius: 0 8px 8px 0;
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .form-modal {
+            width: min(980px, 100%);
+            height: min(850px, 92vh);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .form-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 63px;
+            padding: 0 18px 0 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-modal-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .form-modal-header .modal-close {
+            position: static;
+        }
+
+        .recruitment-frame {
+            width: 100%;
+            height: calc(100% - 63px);
+            border: 0;
+            background: white;
+        }
+
+        @media (max-width: 850px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 72px;
+            }
+
+            .hero-card {
+                max-width: 620px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 610px) {
+            .nav-content,
+            .hero,
+            .section {
+                width: min(100% - 28px, 1160px);
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .nav-content .button {
+                min-height: 40px;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .hero-text {
+                font-size: 15px;
+            }
+
+            .hero-card {
+                padding: 21px;
+            }
+
+            .services-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recruitment-box {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 25px;
+            }
+
+            .team-card {
+                grid-template-columns: 65px 1fr;
+                gap: 14px;
+            }
+
+            .profile-avatar {
+                width: 65px;
+                height: 65px;
+                font-size: 20px;
+            }
+
+            .modal {
+                padding: 23px 18px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Witamy na stronie VENCODE</h1>
-    <p>Tutaj możesz zapoznać się z regulaminem oraz dołączyć na nasz serwer discord.</p>
 
-    <div class="buttons">
-    
-      <button class="btn btn-regulamin" onclick="openRegulamin()">
-        Regulamin
-      </button>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#start" class="logo">
+                <span class="logo-mark">&lt;/&gt;</span>
+                VEN<span>CODE</span>
+            </a>
 
-  
-      <a class="btn btn-discord"
-         href="https://discord.gg/bV64DJmnMG"
-         target="_blank"
-         rel="noopener noreferrer">
-        Dołącz na serwer Discord
-      </a>
+            <div class="nav-links">
+                <a href="#uslugi">Usługi</a>
+                <a href="#rekrutacja">Rekrutacja</a>
+                <a href="#zarzad">Zarząd</a>
+                <a href="#administracja">Administracja</a>
+            </div>
+
+            <a
+                class="button button-discord"
+                href="https://discord.gg/bV64DJmnMG"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Discord
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" id="start">
+            <div>
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    VENCODE — CODING COMMUNITY
+                </div>
+
+                <h1>
+                    Tworzymy kod,<br>
+                    który <span>działa.</span>
+                </h1>
+
+                <p class="hero-text">
+                    VENCODE to społeczność dla osób zainteresowanych programowaniem
+                    i tworzeniem projektów. Wykonujemy pluginy Minecraft, skrypty
+                    Minecraft, boty Discord oraz strony WWW.
+                </p>
+
+                <div class="hero-buttons">
+                    <a
+                        class="button button-discord"
+                        href="https://discord.gg/bV64DJmnMG"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        💬 Dołącz na Discord
+                    </a>
+
+                    <button class="button button-primary" onclick="openRecruitment()">
+                        🚀 Rozpocznij rekrutację
+                    </button>
+
+                    <button class="button button-secondary" onclick="openRegulamin()">
+                        📜 Regulamin
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat">
+                        <strong>Pluginy</strong>
+                        <span>Rozwiązania dla Minecraft</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>Boty DC</strong>
+                        <span>Automatyzacja serwerów</span>
+                    </div>
+
+                    <div class="stat">
+                        <strong>WWW</strong>
+                        <span>Strony i panele internetowe</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="window-header">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="service-preview">
+                    <div class="preview-line">
+                        <div class="preview-icon">⛏️</div>
+                        <div>
+                            <strong>Pluginy Minecraft</strong>
+                            <small>Systemy tworzone pod Twój serwer</small>
+                        </div>
+                    </div>
+
+                    <div class="preview-line">
+                        <div class="preview-icon">📜</div>
+                        <div>
+                            <strong>Skrypty Minecraft</strong>
+                            <small>Funkcjonalne i czytelne rozwiązania</small>
+                        </div>
+                    </div>
+
+                    <div class="preview-line">
+                        <div class="preview-icon">🤖</div>
+                        <div>
+                            <strong>Boty Discord</strong>
+                            <small>Tickety, weryfikacja, powitania/pożegnania itd.</small>
+                        </div>
+                    </div>
+
+                    <div class="preview-line">
+                        <div class="preview-icon">🌐</div>
+                        <div>
+                            <strong>Strony WWW</strong>
+                            <small>Nowoczesny wygląd i responsywność</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="uslugi">
+            <div class="section-heading">
+                <p class="section-label">Oferta VENCODE</p>
+                <h2>Co możemy dla Ciebie stworzyć?</h2>
+                <p class="section-description">
+                    Wybierz rozwiązanie dopasowane do Twojego projektu, serwera
+                    Minecraft lub społeczności na Discordzie.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <article class="service-card">
+                    <div class="service-icon">⛏️</div>
+                    <h3>Pluginy Minecraft</h3>
+                    <p>
+                        Dedykowane pluginy Java dopasowane do mechanik i potrzeb
+                        Twojego serwera.
+                    </p>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon">📜</div>
+                    <h3>Skrypty Minecraft</h3>
+                    <p>
+                        Systemy GUI, komendy, ekonomia, gildie, administracja
+                        i wiele innych funkcji.
+                    </p>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Boty Discord</h3>
+                    <p>
+                        Boty z ticketami, moderacją, logami, rekrutacją
+                        oraz systemami serwerowymi.
+                    </p>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>Strony WWW</h3>
+                    <p>
+                        Strony wizytówki, panele projektów, strony serwerów
+                        i nowoczesne landing page.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="rekrutacja">
+            <div class="recruitment-box">
+                <div>
+                    <p class="section-label">Dołącz do zespołu</p>
+                    <h2>Rekrutacja VENCODE</h2>
+                    <p>
+                        Chcesz zostać częścią naszego zespołu VENCODE? Wypełnij formularz
+                        rekrutacyjny. Odpowiadaj dokładnie i podaj prawdziwe informacje.
+                    </p>
+                </div>
+
+                <button class="button button-primary" onclick="openRecruitment()">
+                    Wypełnij formularz →
+                </button>
+            </div>
+        </section>
+
+        <section class="section" id="zarzad">
+            <div class="section-heading">
+                <p class="section-label">Zespół VENCODE</p>
+                <h2>Zarząd</h2>
+                <p class="section-description">
+                    Osoby odpowiedzialne za rozwój projektu, organizację społeczności
+                    oraz najważniejsze decyzje VENCODE.
+                </p>
+            </div>
+
+            <div class="team-grid">
+                <article class="team-card">
+                    <div class="profile-avatar">RS</div>
+
+                    <div class="team-info">
+                        <span class="role">Właściciel</span>
+                        <h3>Ropi</h3>
+                        <p>
+                            Założyciel VENCODE. Odpowiada za rozwój projektu,
+                            zarządzanie zespołem i główne decyzje społeczności.
+                        </p>
+
+                        
+                        <a class="profile-link" href="#" target="_blank" rel="noopener noreferrer">
+                            Zobacz profil ↗
+                        </a>
+                    </div>
+                </article>
+
+                <article class="team-card">
+                    <div class="profile-avatar">XX</div>
+
+                    <div class="team-info">
+                        <span class="role">HeadAdmin</span>
+                        <h3>Joker</h3>
+                        <p>
+                            Programista: Python, Java, JavaScript, C++, HTML, CSS i JSON. Odpowiada za większość spraw związanych z serwerem, w tym za administrację i moderację.
+                        </p>
+
+                        
+                        <a class="profile-link" href="#" target="_blank" rel="noopener noreferrer">
+                            Zobacz profil ↗
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="administracja">
+            <div class="section-heading">
+                <p class="section-label">Administrator</p>
+                <h2>ྀིྀ✞𝕄𝕣༝ ℙ𝕠𝕝𝕒𝕜✞ ྀིྀ</h2>
+                <p class="section-description">
+                    Jeden z członków zarządu, który pilnuje serwer przed włamaniem i scamem.
+                </p>
+            </div>
+
+            <div class="team-grid">
+                <article class="team-card">
+                    <div class="profile-avatar">AD</div>
+
+                    <div class="team-info">
+                        <span class="role">Administrator</span>
+                        <h3>s</h3>
+                        <p>
+                            Admin.
+                        </p>
+
+
+                        <a class="profile-link" href="#" target="_blank" rel="noopener noreferrer">
+                            Zobacz profil ↗
+                        </a>
+                    </div>
+                </article>
+
+                <article class="team-card">
+                    <div class="profile-avatar">AD</div>
+
+                    <div class="team-info">
+                        <span class="role">Administrator</span>
+                        <h3>s</h3>
+                        <p>
+                            Admin.
+                        </p>
+
+
+                        <a class="profile-link" href="#" target="_blank" rel="noopener noreferrer">
+                            Zobacz profil ↗
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <strong>VENCODE</strong> © <span id="currentYear"></span> — Pluginy, skrypty, boty Discord i strony WWW.
+    </footer>
+
+
+    <div class="modal-overlay" id="regulaminModal" onclick="closeModalOnBackground(event, 'regulaminModal')">
+        <div class="modal">
+            <button class="modal-close" onclick="closeRegulamin()" aria-label="Zamknij regulamin">
+                ×
+            </button>
+
+            <h2>📜 Regulamin VENCODE</h2>
+
+            <p class="rule-title">§1. Zasady ogólne</p>
+            <ul class="rules-list">
+                <li>Szanuj innych użytkowników — zakaz wyzywania, obrażania i prowokowania.</li>
+                <li>Zakaz spamu, floodu oraz reklam bez zgody administracji.</li>
+                <li>Zakaz rasizmu, seksizmu, mowy nienawiści oraz treści +18.</li>
+                <li>Decyzje administracji są ostateczne.</li>
+                <li>Nieznajomość regulaminu nie zwalnia z odpowiedzialności.</li>
+                <li>Zakaz wyłudzania rang administracyjnych od członków administracji.</li>
+            </ul>
+
+            <p class="rule-title">§2. Zasady zamówień</p>
+            <ul class="rules-list">
+                <li>Każdy klient powinien zapoznać się z regulaminem zamówień przed rozpoczęciem współpracy.</li>
+                <li>Developer może zrezygnować z realizacji zamówienia i zwrócić pieniądze klientowi.</li>
+                <li>Klient może korzystać wyłącznie z metod płatności dostępnych dla danego produktu.</li>
+                <li>Klient powinien opłacić produkt przed jego odbiorem, jeśli takie są ustalone warunki zamówienia.</li>
+            </ul>
+
+            <p class="rule-title">§3. Discord</p>
+            <ul class="rules-list">
+                <li>Zakaz wysyłania nieodpowiednich treści, w tym NSFW i materiałów przedstawiających przemoc.</li>
+                <li>Zakaz podszywania się pod administrację lub developerów VENCODE.</li>
+                <li>Nie blokuj kanałów pomocy i nie spamuj zgłoszeniami.</li>
+                <li>Po utworzeniu zgłoszenia cierpliwie poczekaj na odpowiedź administratora.</li>
+            </ul>
+        </div>
     </div>
-  </div>
 
 
-  <div class="modal-overlay" id="regulaminModal">
-    <div class="modal">
-      <h2>Regulamin VENCODE</h2>
-      <p><span class="highlight">§1. Zasady ogólne</span></p>
-      <p>• Szanuj innych graczy – zakaz wyzywania, obrażania i prowokowania.</p>
-      <p>• Zakaz spamu, floodu oraz reklam bez zgody administracji.</p>
-      <p>• Zakaz rasizmu, seksizmu, mowy nienawiści oraz treści +18.</p>
-      <p>• Decyzje administracji są ostateczne.</p>
-      <p>• Nieznajomość regulaminu nie zwalnia z odpowiedzialności.</p>
-      <p>• Zakaz wyłudzania wszelkich rang administracyjnych od administracji.</p>
-      <p><span class="highlight">§2. Zasady zamówień</span></p>
-      <p>• Każdy klient, który zamawia produkt powinien zapoznać się z regulaminem zamówień.</p>
-      <p>• Developer realizujący zamówienie klienta może w każdej chwili odpóścić zamówienie i zwrócić pieniądze.</p>
-      <p>• Jeżeli developer realizujący zamówienie klienta bezczelnie go oszuka, to osoba oszukana może zgłosić developera oraz domagać się zrealizowania jej zamówienia.</p>
-      <p>• Klient może skorzystać z opcji płatności tylko tych, które obowiązują dany produkt.</p>
-      <p>• Klient powinien najpierw zapłacić za produkt przed jego odbiorem.</p>
-      <p><span class="highlight">§3. Discord</span></p>
-      <p>• Zakaz wysyłania treści nieodpowiednich (NSFW, przemoc).</p>
-      <p>• Zakaz podszywania się pod administrację lub developerów naszego serwera.</p>
-      <p>• Zakaz blokowania kanałów pomocy.</p>
-      <p>• Nie spamuj kanałów pomocy.</p>
-      <p>• Nie pisz wielokrotnie tego samego problemu.</p>
-      <p>• Po zgłoszeniu czekaj cierpliwie na administratora, który pomoże.</p>
+    <div class="modal-overlay" id="recruitmentModal" onclick="closeModalOnBackground(event, 'recruitmentModal')">
+        <div class="modal form-modal">
+            <div class="form-modal-header">
+                <h2>🚀 Rekrutacja VENCODE</h2>
 
-      <button class="modal-close" onclick="closeRegulamin()">
-        Zamknij
-      </button>
+                <button class="modal-close" onclick="closeRecruitment()" aria-label="Zamknij rekrutację">
+                    ×
+                </button>
+            </div>
+
+
+            <iframe
+                class="recruitment-frame"
+                title="Formularz rekrutacyjny VENCODE"
+                src="https://docs.google.com/forms/d/e/1FAIpQLSeXdftXYRmeNZpUmDQGHNdQpCmO2RJ_O87y_yPJw3XICXgAcg/viewform?embedded=true"
+            >
+                Ładowanie formularza rekrutacyjnego...
+            </iframe>
+        </div>
     </div>
-  </div>
 
-  <script>
-   
-    function openRegulamin() {
-      document.getElementById('regulaminModal').style.display = 'flex';
-    }
+    <script>
+        const regulaminModal = document.getElementById("regulaminModal");
+        const recruitmentModal = document.getElementById("recruitmentModal");
 
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-    function closeRegulamin() {
-      document.getElementById('regulaminModal').style.display = 'none';
-    }
-  </script>
+        function openRegulamin() {
+            regulaminModal.classList.add("active");
+            document.body.classList.add("modal-open");
+        }
+
+        function closeRegulamin() {
+            regulaminModal.classList.remove("active");
+
+            if (!recruitmentModal.classList.contains("active")) {
+                document.body.classList.remove("modal-open");
+            }
+        }
+
+        function openRecruitment() {
+            recruitmentModal.classList.add("active");
+            document.body.classList.add("modal-open");
+        }
+
+        function closeRecruitment() {
+            recruitmentModal.classList.remove("active");
+
+            if (!regulaminModal.classList.contains("active")) {
+                document.body.classList.remove("modal-open");
+            }
+        }
+
+        function closeModalOnBackground(event, modalId) {
+            if (event.target.id !== modalId) return;
+
+            if (modalId === "regulaminModal") {
+                closeRegulamin();
+            }
+
+            if (modalId === "recruitmentModal") {
+                closeRecruitment();
+            }
+        }
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key !== "Escape") return;
+
+            closeRegulamin();
+            closeRecruitment();
+        });
+    </script>
+
 </body>
 </html>
